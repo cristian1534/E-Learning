@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  elearning_db:
+    image: mysql:5.7
+    container_name: elearning_db
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "3307:3307"
+    restart: always
+    env_file:
+      - ./server/.env
+    networks:
+      - elearning
+
+  elearning:
+    depends_on:
+      - elearning_db
+    build: ./server
+    container_name: elearning
+    ports:
+      - "5000:5000"
+    restart: always
+    env_file:
+      - ./server/.env
+
+    networks:
+      - elearning
+
+networks:
+  elearning:
+    driver: bridge
