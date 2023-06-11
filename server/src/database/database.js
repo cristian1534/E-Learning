@@ -1,14 +1,17 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const color = require("colors");
 const tables = require("./tables");
 require("dotenv").config();
 
-exports.dbConnection = () => {
-  const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+exports.dbConnection = async () => {
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    ssl: {
+      rejectUnauthorized: false
+    }
   });
 
   connection.connect((err) => {
@@ -42,4 +45,3 @@ exports.dbConnection = () => {
     });
   }
 };
-
