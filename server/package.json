@@ -4,7 +4,7 @@
   "description": "E-Learning Backend.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 60000 --exit",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
@@ -13,11 +13,14 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "jwt-simple": "^0.5.6",
+    "mocha": "^10.2.0",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "mysql2": "^3.3.3",
