@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,11 +8,83 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+      backgroundImage: {},
+      colors: {
+        light: {
+          primary: {
+            default: "#9F8FEF",
+            50: '#f1f0f7',
+            100: '#e2e0ef',
+            200: '#c4c1e0',
+            300: '#a7a3d0',
+            400: '#8a87c1',
+            500: '#9F8FEF',
+            600: '#736eae',
+            700: '#595480',
+            800: '#403b51',
+            900: '#27242b',
+            950: '#131119',
+          },
+          secondary: {
+            default: "#FEFEFE",
+            50: '#FEFEFE',
+            100: '#f2f2f2',
+            200: '#e6e6e6',
+            300: '#d9d9d9',
+            400: '#cccccc',
+            500: '#bfbfbf',
+            600: '#b3b3b3',
+            700: '#a6a6a6',
+            800: '#999999',
+            900: '#8c8c8c',
+          },
+        },
+        dark: {
+          primary: {
+            default: "#1D2125",
+            50: '#494d51',
+            100: '#3f4347',
+            200: '#35393d',
+            300: '#2b2f33',
+            400: '#212529',
+            500: '#1D2125',
+            600: '#181b1e',
+            700: '#131517',
+            800: '#0e1012',
+            900: '#090a0c',
+            950: '#050607',
+          },
+          secondary: {
+            default: "#9F8FEF",
+            50: '#f1f0f7',
+            100: '#e2e0ef',
+            200: '#c4c1e0',
+            300: '#a7a3d0',
+            400: '#8a87c1',
+            500: '#9F8FEF',
+            600: '#736eae',
+            700: '#595480',
+            800: '#403b51',
+            900: '#27242b',
+            950: '#131119',
+          },
+          third: {
+            default: '#FEF999',
+            50: '#fefdf4',
+            100: '#fefce9',
+            200: '#fdf9cc',
+            300: '#fcf7af',
+            400: '#fbf491',
+            500: '#FEF999',
+            600: '#f4ee89',
+            700: '#ebe77a',
+            800: '#e1e06a',
+            900: '#d7d85b',
+            950: '#cdd14f',
+          }
+        },
+
+      }
     },
   },
   plugins: [],
