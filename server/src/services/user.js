@@ -52,3 +52,25 @@ exports.getUserByEmail = async (email) => {
     return err.message;
   }
 };
+
+exports.getUserById = async (id) => {
+  try {
+    const connection = await dbConnection();
+    const query = "SELECT * FROM users WHERE id = ?";
+    const values = [id];
+
+    return new Promise((resolve, reject) => {
+      connection.query(query, values, (err, result) => {
+        if (err) {
+          console.error(color.red.bold.underline("Could not get user", err));
+          reject(err);
+        } else {
+          resolve(result);
+        }
+        connection.end();
+      });
+    });
+  } catch (err) {
+    return err.message;
+  }
+};

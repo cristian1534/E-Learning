@@ -6,6 +6,7 @@ const color = require("colors");
 const { dbConnection } = require("../src/database/database");
 
 chai.use(chaiHttp);
+let id;
 
 describe("Test on auth controllers", () => {
   it(
@@ -27,7 +28,23 @@ describe("Test on auth controllers", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
+          id = res.body.user.id;
           done();
+        });
+    }
+  );
+
+  it(
+    color.yellow.bold(
+      "Should get user by ID, have status 200, return found user."
+    ),
+    (done) => {
+      chai
+        .request(server)
+        .get(`/api/user/${id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
         });
     }
   );
