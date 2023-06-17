@@ -45,6 +45,7 @@ describe("Test on auth controllers", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
+          done();
         });
     }
   );
@@ -66,6 +67,22 @@ describe("Test on auth controllers", () => {
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.should.have.property("token");
+          done();
+        });
+    }
+  );
+
+  it(
+    color.yellow.bold(
+      "Should get all registered users, have status 200, return array of users."
+    ),
+    (done) => {
+      chai
+        .request(server)
+        .get("/api/user")
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("array");
           done();
         });
     }

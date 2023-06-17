@@ -74,3 +74,24 @@ exports.getUserById = async (id) => {
     return err.message;
   }
 };
+
+exports.getAll = async () => {
+  try {
+    const connection = await dbConnection();
+    const query = "SELECT id, username, email FROM users";
+
+    return new Promise((resolve, reject) => {
+      connection.query(query, (err, result) => {
+        if (err) {
+          console.error(color.red.bold.underline("Could not get users", err));
+          reject(err);
+        } else {
+          resolve(result);
+        }
+        connection.end();
+      });
+    });
+  } catch (err) {
+    return err.message;
+  }
+};
