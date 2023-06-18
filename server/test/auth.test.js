@@ -88,6 +88,26 @@ describe("Test on auth controllers", () => {
     }
   );
 
+  it(
+    color.yellow.bold("Should update user, have status 200, return a message"),
+    (done) => {
+      let user = {
+        name: "Pedro Gutierrez",
+        username: "pedro-dev",
+        email: "pedro@gmail.com",
+      };
+
+      chai
+        .request(server)
+        .patch(`/api/user/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.body.should.have.property("message").eql("User updated");
+          done();
+        });
+    }
+  );
+
   after((done) => {
     const query = "DELETE FROM users";
     dbConnection()

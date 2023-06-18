@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/controllers/auth/register.js</title>
+    <title>Code coverage report for src/controllers/user/user.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/controllers/auth</a> register.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/controllers/user</a> user.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">17.64% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>3/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">17.64% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/12</span>
+                <span class='fraction'>3/17</span>
             </div>
         
             
@@ -85,20 +85,39 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -106,29 +125,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { createUser } = require("../../services/user");
-const bcrypt = require("bcrypt");
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { getUserById, getAll } = require("../../services/user");
 &nbsp;
-&nbsp;
-exports.create = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+exports.getOne = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const { name, username, email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-<span class="cstat-no" title="statement not covered" >    if (!name || !username || !email || !password) <span class="cstat-no" title="statement not covered" >return res.status(400);</span></span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+    const user = <span class="cstat-no" title="statement not covered" >await getUserById(id);</span>
+<span class="cstat-no" title="statement not covered" >    if (!user.length)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(404).json({ message: "User not found" });</span>
 &nbsp;
-    const salt = <span class="cstat-no" title="statement not covered" >10;</span>
-    const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(password, salt);</span>
-&nbsp;
-    const user = <span class="cstat-no" title="statement not covered" >await createUser(name, username, email, hashedPassword);</span>
-<span class="cstat-no" title="statement not covered" >    console.log(user)</span>
-<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ message: "User created successfully", user });</span>
+    const { name, username, email } = <span class="cstat-no" title="statement not covered" >user[0];</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ name, username, email });</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    return res</span>
       .status(500)
-      .json({ message: "Error when creating User", error: err.message });
+      .json({ message: "Error when searching for user", error: err.message });
   }
 };
 &nbsp;
+exports.get = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const users = <span class="cstat-no" title="statement not covered" >await getAll();</span>
+<span class="cstat-no" title="statement not covered" >    if (!users.length)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: "Not users found" });</span>
+    
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json(users)</span>
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    return res</span>
+      .status(500)
+      .json({ message: "Error when searching for user", error: err.message });
+  }
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">26.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>4/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">26.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>4/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -98,20 +98,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,21 +127,21 @@
 const { createToken } = require("../../helpers/token_creator");
 const { getUserByEmail } = require("../../services/user");
 &nbsp;
-exports.login = async (req, res) =&gt; {
-  try {
-    const { email, password } = req.body;
+exports.login = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
 &nbsp;
-    const user = await getUserByEmail(email);
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user.length)
+    const user = <span class="cstat-no" title="statement not covered" >await getUserByEmail(email);</span>
+<span class="cstat-no" title="statement not covered" >    if (!user.length)</span>
 <span class="cstat-no" title="statement not covered" >      return res.status(404).json({ message: "Email not found" });</span>
 &nbsp;
-    const validated_password = await bcrypt.compare(password, user[0].password);
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!validated_password)
+    const validated_password = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(password, user[0].password);</span>
+<span class="cstat-no" title="statement not covered" >    if (!validated_password)</span>
 <span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: "Wrong Email or Password" });</span>
 &nbsp;
-    const token = createToken(user[0]);
+    const token = <span class="cstat-no" title="statement not covered" >createToken(user[0]);</span>
 &nbsp;
-    return res.status(200).json({
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json({</span>
       name: user[0].name,
       username: user[0].username,
       email: user[0].email,
@@ -160,7 +160,7 @@ exports.login = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-15T11:41:27.585Z
+                at 2023-06-17T20:24:16.494Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
