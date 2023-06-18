@@ -107,6 +107,20 @@ describe("Test on auth controllers", () => {
         });
     }
   );
+  
+  it(
+    color.yellow.bold("Should delete user, have status 200, return a message"),
+    (done) => {
+      chai
+        .request(server)
+        .delete(`/api/user/${id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("message").eql("User deleted");
+          done();
+        });
+    }
+  );
 
   after((done) => {
     const query = "DELETE FROM users";

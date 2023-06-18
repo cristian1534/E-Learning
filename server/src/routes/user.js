@@ -6,6 +6,6 @@ const router = express.Router();
 router.get("/:id", getOne);
 router.get("/", get);
 router.patch("/:id", update);
-router.delete("/api/user/:id", deleteOne )
+router.delete("/:id", deleteOne )
 
 module.exports = router;
