@@ -22,8 +22,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-             cd client
-             npm ci
+             cd E-Learning/client
+             npm install
 
       - name: Build Next.js app
         run: npm run build
