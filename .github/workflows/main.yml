@@ -27,6 +27,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel
-        uses: vercel/action@v20
+        uses:  vercel/vercel-action@v21
         with:
           vercel-token: ${{ secrets.MY_PAT }}
