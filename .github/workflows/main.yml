@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: 'E-Learning/client'
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -22,18 +20,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-             cd E-Learning/client
-             npm install
+          cd client
+          npm ci
 
       - name: Build Next.js app
-        run: npm run build
+        run: |
+          cd client
+          npm run build
 
       - name: Export Next.js app
-        run: npm run export
+        run: |
+          cd client
+          npm run export
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
-          publish-dir: ./out
+          publish-dir: ./client/out
           deploy-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           flags: --prod
