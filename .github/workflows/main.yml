@@ -16,18 +16,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.16.0'  # Cambia esto a la versión de Node.js que tienes
+          node-version: '18.16.0'  
 
       - name: Build and deploy to GitHub Pages
         run: |
           cd client
           npm install
           npm run build
-          echo 'example.com' > client/out/CNAME  # Cambia "example.com" por tu propio dominio (opcional)
+            
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: client/out
