@@ -1,76 +1,33 @@
-name: Deploy Next.js site to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - develop
-    paths:
-      - 'client/**'
-
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+      - main  # Cambia esto si estás utilizando otra rama principal
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/client/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_ENV
-            echo "command=install" >> $GITHUB_ENV
-            echo "runner=yarn" >> $GITHUB_ENV
-            exit 0
-          elif [ -f "${{ github.workspace }}/client/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_ENV
-            echo "command=ci" >> $GITHUB_ENV
-            echo "runner=npx --no-install" >> $GITHUB_ENV
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-      - name: Set up client directory
-        run: cd client
-      - name: Restore cache
-        uses: actions/cache@v2
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-      - name: Install dependencies
-        run: ${{ env.manager }} ${{ env.command }}
-      - name: Build with Next.js
-        run: ${{ env.runner }} next build
-      - name: Static HTML export with Next.js
-        run: ${{ env.runner }} next export
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: pages-artifact
-          path: ./out
-
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.16.0'  # Cambia esto a la versión de Node.js que tienes
+
+      - name: Build and deploy to GitHub Pages
+        run: |
+          cd client
+          npm install
+          npm run build
+          echo 'example.com' > client/out/CNAME  # Cambia "example.com" por tu propio dominio (opcional)
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: client/out
