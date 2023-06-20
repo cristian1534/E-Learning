@@ -76,3 +76,6 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           token: ${{ secrets.E_TOKEN }}
+          
+        env:
+          ACTIONS_STEP_DEBUG: true
