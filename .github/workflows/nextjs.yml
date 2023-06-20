@@ -31,29 +31,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "client/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_ENV
-            echo "command=install" >> $GITHUB_ENV
-            echo "runner=yarn" >> $GITHUB_ENV
-            exit 0
-          elif [ -f "client/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_ENV
-            echo "command=ci" >> $GITHUB_ENV
-            echo "runner=npm" >> $GITHUB_ENV
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
+      - name: Navigate to client directory
+        run: cd client
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Navigate to client directory
-        run: cd client
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -65,11 +48,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: npm ci
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: npm run build
       - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+        run: npm run export
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -90,4 +73,3 @@ jobs:
         run: cd client
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
-
