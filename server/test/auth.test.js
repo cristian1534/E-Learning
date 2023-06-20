@@ -6,6 +6,7 @@ const color = require("colors");
 const { dbConnection } = require("../src/database/database");
 
 chai.use(chaiHttp);
+let id;
 
 describe("Test on auth controllers", () => {
   it(
@@ -24,6 +25,23 @@ describe("Test on auth controllers", () => {
         .request(server)
         .post("/api/auth/register")
         .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          id = res.body.user.id;
+          done();
+        });
+    }
+  );
+
+  it(
+    color.yellow.bold(
+      "Should get user by ID, have status 200, return found user."
+    ),
+    (done) => {
+      chai
+        .request(server)
+        .get(`/api/user/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
@@ -49,6 +67,56 @@ describe("Test on auth controllers", () => {
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.should.have.property("token");
+          done();
+        });
+    }
+  );
+
+  it(
+    color.yellow.bold(
+      "Should get all registered users, have status 200, return array of users."
+    ),
+    (done) => {
+      chai
+        .request(server)
+        .get("/api/user")
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("array");
+          done();
+        });
+    }
+  );
+
+  it(
+    color.yellow.bold("Should update user, have status 200, return a message"),
+    (done) => {
+      let user = {
+        name: "Pedro Gutierrez",
+        username: "pedro-dev",
+        email: "pedro@gmail.com",
+      };
+
+      chai
+        .request(server)
+        .patch(`/api/user/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.body.should.have.property("message").eql("User updated");
+          done();
+        });
+    }
+  );
+  
+  it(
+    color.yellow.bold("Should delete user, have status 200, return a message"),
+    (done) => {
+      chai
+        .request(server)
+        .delete(`/api/user/${id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("message").eql("User deleted");
           done();
         });
     }

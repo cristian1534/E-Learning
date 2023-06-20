@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const redis = require("redis");
 const { dbConnection } = require("./database/database");
 const authRoutes = require("./routes/auth");
-
+const userRoutes = require("./routes/user");
 
 const app = express();
 dbConnection();
@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(PORT, () => {
   console.log(color.cyan.bold.underline(`Server running on ${PORT}`));
