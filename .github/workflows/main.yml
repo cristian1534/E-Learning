@@ -28,5 +28,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
+          personal_token: ${{ secrets.E_Learning_Github_Token }}
           publish_branch: gh-pages
           publish_dir: client/out
