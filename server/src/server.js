@@ -7,6 +7,7 @@ const redis = require("redis");
 const { dbConnection } = require("./database/database");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const contactRoutes = require("./routes/contact");
 
 const app = express();
 dbConnection();
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.listen(PORT, () => {
   console.log(color.cyan.bold.underline(`Server running on ${PORT}`));
