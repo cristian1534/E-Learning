@@ -15,7 +15,6 @@ jobs:
 
       - name: Set up Git safe directory
         run: |
-          git config --global --unset-all safe.directory
           git config --global --add safe.directory /home/runner/work/E-Learning
 
       - name: Install Vercel CLI
