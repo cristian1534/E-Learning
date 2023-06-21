@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import Image from 'next/image'
 import { Lato } from 'next/font/google'
 
-import { Formik, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
+import registerUser, { loginUser } from '@/pages/api/auth';
 import { AuthLayouts } from '../../../../components/layouts/AuthLayout';
 import register from '../../../../public/cofee.svg'
-import { useState } from 'react';
-import Register from '@/pages/api/auth';
 
 const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
@@ -24,19 +24,19 @@ const FormPage = () => {
 
   const initialValues = (form === 'Login') ?
     {
-      email: '',
+      loginEmail: '',
       password: ''
     } : {
       name: '',
       userName: '',
-      email: '',
+      registerEmail: '',
       password: '',
       Rpassword: ''
     }
 
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().when('form', {
+    loginEmail: Yup.string().when('form', {
       is: 'Login',
       then: Yup.string()
         .email('Ingresa un correo electrónico válido')
@@ -56,7 +56,7 @@ const FormPage = () => {
       is: 'Registro',
       then: Yup.string().required('El nombre de usuario es requerido')
     }),
-    email: Yup.string().when('form', {
+    registerEmail: Yup.string().when('form', {
       is: 'Registro',
       then: Yup.string()
         .email('Ingresa un correo electrónico válido')
@@ -73,10 +73,21 @@ const FormPage = () => {
   const { handleSubmit, handleChange, values } = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (form === 'Register') {
-        const resp = Register()
+
+        const user = {
+          name: values.name,
+          username: values.userName,
+          email: values.registerEmail,
+          password: values.password
+        }
+        const data = await registerUser(user)
+        console.log(data);
       }
+      const { loginEmail, password } = values;
+      const resp = await loginUser({ email: loginEmail, password })
+      console.log(resp);
     }
   })
 
@@ -121,33 +132,54 @@ const FormPage = () => {
           <form className='flex flex-wrap place-content-center gap-3 md:w-2/4 lg:w-96  h-3/5 md:h-3/4 lg:rounded-md' onSubmit={handleSubmit}>
             {
               form === 'Register' &&
-              <input className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3' placeholder='Name' type="text" name='name'
+              <input className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
+                placeholder='Name'
+                type="text"
+                name='name'
                 onChange={handleChange}
-                value={values.name}
+                value={values.name || ''}  // Ensure a default value of ''
                 id='name' />
             }
+
             {
               form === 'Register' &&
-              <input className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3' placeholder='Username' type="text" name='userName'
+              <input className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
+                placeholder='Username'
+                type="text"
+                name='userName'
                 onChange={handleChange}
-                value={values.userName}
+                value={values.userName || ''}  // Ensure a default value of ''
                 id='userName' />
             }
 
-            <input className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3' placeholder='Email' type="text" name='email'
+            <input
+              className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
+              placeholder='Email'
+              type="text"
+              name={form === 'Register' ? 'registerEmail' : 'loginEmail'}
               onChange={handleChange}
-              value={values.email}
-              id='email' />
-            <input className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3' placeholder='Password' type="password" name='password'
+              value={values[form === 'Register' ? 'registerEmail' : 'loginEmail'] || ''}
+              id='email'
+            />
+
+            <input
+              className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
+              placeholder='Password'
+              type="password"
+              name='password'
               onChange={handleChange}
-              value={values.password}
-              id='password' />
+              value={values.password || ''} // Provide a default value of ''
+              id='password'
+            />
 
             {
               form === 'Register' &&
-              <input className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3' placeholder='Repeat password' type="password" name='Rpassword'
+              <input className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
+                placeholder='Repeat password'
+                type="password"
+                name='Rpassword'
                 onChange={handleChange}
-                value={values.Rpassword}
+                value={values.Rpassword || ''}
                 id='Rpassword' />
             }
 
