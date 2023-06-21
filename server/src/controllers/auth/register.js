@@ -11,7 +11,6 @@ exports.create = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await createUser(name, username, email, hashedPassword);
-    console.log(user)
     return res.status(200).json({ message: "User created successfully", user });
   } catch (err) {
     return res
