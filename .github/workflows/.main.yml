@@ -19,5 +19,8 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
 
+      - name: Initialize Git repository
+        run: git init /home/runner/work
+
       - name: Deploy to Vercel`
         run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod 
