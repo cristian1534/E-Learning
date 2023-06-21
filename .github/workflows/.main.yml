@@ -17,4 +17,4 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel`
-        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod /client
+        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod https://github.com/cristian1534/E-Learning/tree/develop/client
