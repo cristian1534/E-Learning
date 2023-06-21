@@ -14,13 +14,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Git safe directory
-        run: git config --global --add safe.directory /home/runner/work
+        run: git config --global --add safe.directory /home/runner/work/E-Learning
 
       - name: Install Vercel CLI
         run: npm install -g vercel
 
-      - name: Initialize Git repository
-        run: git init /home/runner/work
-
-      - name: Deploy to Vercel`
-        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod 
+      - name: Deploy to Vercel
+        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod ~/work/E-Learning/client
