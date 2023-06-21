@@ -21,8 +21,8 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
 
-      - name: Change to client directory
-        run: cd client
+      - name: Change working directory
+        run: cd /home/runner/work/E-Learning
 
       - name: Deploy to Vercel
-        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod
+        run: vercel --token ${{ secrets.E_Learning_Vercel_Token }} --prod client
