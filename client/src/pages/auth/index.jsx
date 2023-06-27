@@ -6,8 +6,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import registerUser, { loginUser } from '@/pages/api/auth';
-import { AuthLayouts } from '../../../../components/layouts/AuthLayout';
-import register from '../../../../public/cofee.svg'
+import register from '../../../public/cofee.svg'
+import { AuthLayouts } from '../../../components/layouts/AuthLayout';
 
 const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
