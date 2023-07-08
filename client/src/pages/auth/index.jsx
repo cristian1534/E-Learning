@@ -8,6 +8,9 @@ import * as Yup from 'yup'
 import registerUser, { loginUser } from '@/pages/api/auth';
 import register from '../../../public/cofee.svg'
 import { AuthLayouts } from '../../../components/layouts/AuthLayout';
+import { HiHome } from 'react-icons/hi';
+import { FaWalking } from 'react-icons/fa';
+import Link from 'next/link';
 
 const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
@@ -101,21 +104,21 @@ const FormPage = () => {
 
   return (
     <AuthLayouts title={form}>
-      <div className={`w-full h-full flex flex-col justify-center items-center gap-4 bg-dark-secondary-500 ${lato.className}`}>
+      <div className={`w-screen h-screen flex flex-col justify-center items-center gap-4 bg-dark-secondary-500 ${lato.className}`}>
         <div className='absolute top-10 right-0'>
-          <div className='w-20 h-auto rounded-l-md pl-2 bg-dark-primary-200'>
+          <div className='w-28 h-auto rounded-l-md pl-2 bg-dark-primary-200'>
             <button className='font-semibold text-1xl w-full  text-dark-third-700'
               onClick={handdleForm}
             >
-              {form}
+              {form !== 'Register' ? "Go Register" : "Go Login"}
             </button>
           </div>
         </div>
 
-        <div className='h-16 absolute top-5'>
-          <h1 className='text-4xl font-extrabold'> {form === 'Register' ? "Let's sign you in." : "Let's go"}</h1>
+        <div className='h-16 absolute top-5 left-10'>
+          <h1 className='text-4xl font-extrabold'> {form === 'Register' ? "Let's sign you in." : ""}</h1>
           <h5 className='text-2xl font-medium'>
-            {form === 'Register' ? "We want to show you our web!" : "We miss you"}
+            {form === 'Register' ? "We want to show you our web!" : ""}
           </h5>
         </div>
 
@@ -128,7 +131,7 @@ const FormPage = () => {
           />
         </div>
 
-        <div className=' flex justify-end items-center lg:justify-center lg:items-center w-auto lg:pr-24'>
+        <div className='flex justify-end items-center'>
           <form className='flex flex-wrap place-content-center gap-3 md:w-2/4 lg:w-96  h-3/5 md:h-3/4 lg:rounded-md' onSubmit={handleSubmit}>
             {
               form === 'Register' &&
@@ -191,6 +194,12 @@ const FormPage = () => {
               }
             </button>
           </form>
+        </div>
+        <div className='flex justify-end  w-full px-2 fixed bottom-4 '>
+          <Link href={'/'} className='flex justify-center items-center hover:text-white'>
+            <FaWalking size={20} />
+            <p>  HOME</p>
+          </Link>
         </div>
       </div>
     </AuthLayouts>

@@ -10,7 +10,7 @@ export const AuthLayouts = ({ children, title }) => {
       </Head>
 
       <main >
-        <div className='flex-col items-center h-screen max-w-max'>
+        <div className='flex-col items-center h-screen w-full'>
           {children}
         </div>
       </main>

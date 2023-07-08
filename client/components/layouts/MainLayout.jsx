@@ -10,7 +10,6 @@ export const MainLayout = ({ children, title }) => {
       <Head>
         <title>{title}</title>
       </Head>
-
       <main className=' w-full h-screen' >
         <Navbar />
         {children}
