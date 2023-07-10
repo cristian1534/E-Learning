@@ -9,6 +9,10 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const contactRoutes = require("./routes/contact");
 const tutorialRoutes = require("./routes/tutorial");
+const reactDocRoutes = require("./routes/reactDoc");
+const nodeDocRoutes = require("./routes/nodeDoc");
+const testDocRoutes = require("./routes/testDoc");
+const reduxDocRoutes = require("./routes/reduxDoc");
 
 const app = express();
 dbConnection();
@@ -28,8 +32,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/tutorial", tutorialRoutes);
-
-
+app.use("/api/react-doc", reactDocRoutes);
+app.use("/api/node-doc", nodeDocRoutes);
+app.use("/api/test-doc", testDocRoutes);
+app.use("/api/redux-doc", reduxDocRoutes);
 
 app.listen(PORT, () => {
   console.log(color.cyan.bold.underline(`Server running on ${PORT}`));
