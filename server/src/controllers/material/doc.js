@@ -5,7 +5,8 @@ exports.reactDoc = async (req, res) => {
     const url = "https://fullstackopen.com/en/part1";
     const data = await scrapeWebsite(url);
     if (!data) return res.status(404).json({ message: "React Doc not found" });
-
+    
+    
     return res.status(200).json(data);
   } catch (err) {
     return res.status(500).json({ message: "Error when fetching React Doc" });

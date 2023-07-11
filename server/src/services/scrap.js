@@ -12,7 +12,7 @@ exports.scrapeWebsite = async (url) => {
       const href = $(element).attr("href");
       const spanContent = $(element).find("span").text();
 
-      doc.push({ doc: spanContent, url: href });
+      doc.push({ doc: spanContent, url: `https://fullstackopen.com${href}` });
 
       // console.log("Span Content:", spanContent);
       // console.log("Href:", url + href);
@@ -23,3 +23,4 @@ exports.scrapeWebsite = async (url) => {
     return err.message;
   }
 };
+  
