@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link';
 import Image from "next/image";
 import notebook from '../../public/notebook.svg'
@@ -20,7 +21,7 @@ export default function Home() {
           <p className='text-2xl italic font-semibold'>Welcome to E-learning your place to learn more!</p>
         </div>
         <div className='w-1/3 h-auto flex flex-col justify-start items-center gap-2 relative'>
-          <Link href={`/auth`}
+          <Link href={`/auth/register`}
             className='w-2/5 h-16 z-500 flex justify-center items-center font-bold -skew-y-6 rotate-6 text-xl uppercase px-3 bg-dark-third-900 
             text-dark-secondary-900 absolute 
             shadow-md

@@ -1,106 +1,96 @@
 import { useState } from 'react';
-import Image from 'next/image'
-import { Lato } from 'next/font/google'
-
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-
-import registerUser, { loginUser } from '@/pages/api/auth';
-import register from '../../../public/cofee.svg'
-import { AuthLayouts } from '../../../components/layouts/AuthLayout';
-import { HiHome } from 'react-icons/hi';
-import { FaWalking } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Lato } from 'next/font/google';
+import { FaWalking } from 'react-icons/fa';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { AuthLayouts } from '../../../components/layouts/AuthLayout';
+
+import register from '../../../public/cofee.svg';
+import { registerUser } from '../api/auth';
+import { useAuth } from '@/context/hooks/useAuth';
 
 const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
   style: 'italic',
   subsets: ['latin'],
   display: 'swap',
-})
-
-
+});
 
 const FormPage = () => {
+  const [form, setform] = useState('Login');
+  const { OnLogin } = useAuth();
 
-  const [form, setform] = useState('Login')
-
-  const initialValues = (form === 'Login') ?
-    {
-      loginEmail: '',
-      password: ''
-    } : {
-      name: '',
-      userName: '',
-      registerEmail: '',
-      password: '',
-      Rpassword: ''
-    }
-
+  const initialValues = {
+    loginEmail: '',
+    password: '',
+    name: '',
+    userName: '',
+    registerEmail: '',
+    Rpassword: '',
+  };
 
   const validationSchema = Yup.object().shape({
     loginEmail: Yup.string().when('form', {
       is: 'Login',
       then: Yup.string()
         .email('Ingresa un correo electrónico válido')
-        .required('El correo electrónico es requerido')
+        .required('El correo electrónico es requerido'),
     }),
     password: Yup.string().when('form', {
       is: 'Login',
       then: Yup.string()
         .min(8, 'La contraseña debe tener al menos 8 caracteres')
-        .required('La contraseña es requerida')
+        .required('La contraseña es requerida'),
     }),
     name: Yup.string().when('form', {
       is: 'Registro',
-      then: Yup.string().required('El nombre es requerido')
+      then: Yup.string().required('El nombre es requerido'),
     }),
     userName: Yup.string().when('form', {
       is: 'Registro',
-      then: Yup.string().required('El nombre de usuario es requerido')
+      then: Yup.string().required('El nombre de usuario es requerido'),
     }),
     registerEmail: Yup.string().when('form', {
       is: 'Registro',
       then: Yup.string()
         .email('Ingresa un correo electrónico válido')
-        .required('El correo electrónico es requerido')
+        .required('El correo electrónico es requerido'),
     }),
     Rpassword: Yup.string().when('form', {
       is: 'Registro',
       then: Yup.string()
         .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
-        .required('Repite la contraseña')
-    })
+        .required('Repite la contraseña'),
+    }),
   });
 
-  const { handleSubmit, handleChange, values } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      console.log(form);
       if (form === 'Register') {
-
         const user = {
           name: values.name,
           username: values.userName,
           email: values.registerEmail,
-          password: values.password
-        }
-        const data = await registerUser(user)
+          password: values.password,
+        };
+        const data = await registerUser(user);
         console.log(data);
       }
-      const { loginEmail, password } = values;
-      const resp = await loginUser({ email: loginEmail, password })
-      console.log(resp);
-    }
-  })
-
+      await OnLogin({ email: values.loginEmail, password: values.password });
+    },
+  });
 
   const handdleForm = () => {
     if (form !== 'Register') setform('Register');
     if (form !== 'Login') setform('Login');
-
-  }
-
+  };
 
   return (
     <AuthLayouts title={form}>
@@ -132,8 +122,9 @@ const FormPage = () => {
         </div>
 
         <div className='flex justify-end items-center'>
+
           <form className='flex flex-wrap place-content-center gap-3 md:w-2/4 lg:w-96  h-3/5 md:h-3/4 lg:rounded-md' onSubmit={handleSubmit}>
-            {
+            {/* {
               form === 'Register' &&
               <input className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
                 placeholder='Name'
@@ -153,7 +144,7 @@ const FormPage = () => {
                 onChange={handleChange}
                 value={values.userName || ''}  // Ensure a default value of ''
                 id='userName' />
-            }
+            } */}
 
             <input
               className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
@@ -164,6 +155,9 @@ const FormPage = () => {
               value={values[form === 'Register' ? 'registerEmail' : 'loginEmail'] || ''}
               id='email'
             />
+            {touched[form === 'Register' ? 'registerEmail' : 'loginEmail'] && errors[form === 'Register' ? 'registerEmail' : 'loginEmail'] && (
+              <div>{errors[form === 'Register' ? 'registerEmail' : 'loginEmail']}</div>
+            )}
 
             <input
               className=' h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
@@ -174,8 +168,10 @@ const FormPage = () => {
               value={values.password || ''} // Provide a default value of ''
               id='password'
             />
-
-            {
+            {touched.password && errors.password && (
+              <div>{errors.password}</div>
+            )}
+            {/* {
               form === 'Register' &&
               <input className='h-12 w-5/6 rounded-md bg-light-primary-100 border border-light-primary-800 p-3'
                 placeholder='Repeat password'
@@ -184,7 +180,7 @@ const FormPage = () => {
                 onChange={handleChange}
                 value={values.Rpassword || ''}
                 id='Rpassword' />
-            }
+            } */}
 
             <button type='submit' className='h-12 w-2/4 bg-dark-primary-200 text-light-primary-300 rounded-md font-semibold'>
               {form === 'Register' ?
