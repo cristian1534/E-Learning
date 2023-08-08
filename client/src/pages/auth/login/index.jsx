@@ -61,7 +61,7 @@ const FormPage = () => {
 
   const handleLogin = async ({ email, password }) => {
     await OnLogin({ email, password });
-    router.push('/')
+    router.push('/dashboard')
   }
 
 

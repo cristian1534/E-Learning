@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../UserProvider";
-import { loginUser } from "@/pages/api/auth";
+import { loginUser, registerUser } from "@/pages/api/auth";
 
 export function useAuth() {
   const {
@@ -31,14 +31,20 @@ export function useAuth() {
     dispatch({ type: 'checking' });
     const deleted = deletUserDataLocalStorage();
     if (deleted) {
-      dispatch({ type:'not-authenticated' });
+      dispatch({ type: 'not-authenticated' });
     }
     console.log(isAuthenticated);
+  }
+
+  async function OnRegister({ name, username, email, password }) {
+    const data = await registerUser({ name, username, email, password })
+    return data;
   }
 
   return {
     OnLogin,
     OnLogout,
+    OnRegister,
     isAuthenticated,
     userState
   };

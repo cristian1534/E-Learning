@@ -2,13 +2,21 @@ import axios from 'axios';
 const urlBase = "http://localhost:5000/api";
 
 export async function registerUser(user) {
-  console.log(user);
   if (user) {
     try {
       const response = await axios.post(`${urlBase}/auth/register`, user);
 
-      return response.data;
+      if (response.data.user !== null) {
+        const resp = {
+          msg: response.data.message,
+          status: 200
+        }
+        return resp;
+      }
 
+      return {
+        msg: response.data.message,
+      }
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
       throw error;
