@@ -1,8 +1,17 @@
+import { UserProvider } from '@/context/UserProvider'
 import '@/styles/globals.css'
 
-export default function App({ Component, pageProps }) {
-  return (
-      <Component {...pageProps} />
+// const Noop = ({ children }) => <>{children}</>;
 
+export default function App({ Component, pageProps }) {
+
+  const Auth = Component.Auth || (({ children }) => <>{children}</>);
+
+  return (
+    <UserProvider>
+      <Auth>
+        <Component {...pageProps} />
+      </Auth>
+    </UserProvider>
   )
 }
