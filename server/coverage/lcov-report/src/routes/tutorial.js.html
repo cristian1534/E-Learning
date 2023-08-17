@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/routes/auth.js</title>
+    <title>Code coverage report for src/routes/tutorial.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> auth.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> tutorial.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -75,25 +75,25 @@
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { create } = require("../controllers/auth/register");
-const { login } = require("../controllers/auth/login");
-&nbsp;
-const express = require("express");
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const express = require("express");
 const router = express.Router();
+const { reactVideos } = require("../controllers/tutorial/react");
+const { nodeVideos } = require("../controllers/tutorial/node");
 &nbsp;
-router.post("/register", create);
-router.post("/login", login);
 &nbsp;
-module.exports = router;
-&nbsp;</pre></td></tr></table></pre>
+&nbsp;
+router.get("/react", reactVideos);
+router.get("/node", nodeVideos);
+&nbsp;
+module.exports = router;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
